@@ -2,7 +2,7 @@
 
 namespace LabWork09
 {
-    internal class GeoCoordinatesArray
+    public class GeoCoordinatesArray
     {
         private GeoCoordinates[] coordinatesArray;
 
@@ -60,7 +60,7 @@ namespace LabWork09
                 }
                 while (flagLon != true)
                 {
-                    if (coordinatesArray[i].Longitude== 0.01) { coordinatesArray[i].Longitude = InputDoubleNumber("Долгота: "); }
+                    if (coordinatesArray[i].Longitude == 0.01) { coordinatesArray[i].Longitude = InputDoubleNumber("Долгота: "); }
                     else flagLon = true;
                 }
             }
@@ -112,6 +112,35 @@ namespace LabWork09
                 }
                 coordinatesArray[index] = value;
             }
+        }
+
+        public void FindNearestToZeroIslandIndex()
+        {
+            if (coordinatesArray.Length == 0)
+            {
+                throw new InvalidOperationException("Массив координат пуст.");
+            }
+
+            double minDistance = double.MaxValue;
+            int nearestIndex = 0;
+
+            // Координаты "Острова Ноль"
+            double zeroLatitude = 0;
+            double zeroLongitude = 0;
+
+            for (int i = 0; i < coordinatesArray.Length; i++)
+            {
+                // Вычисляем расстояние между текущей точкой и "Островом Ноль"
+                double distance = coordinatesArray[i].Distance(new GeoCoordinates(zeroLatitude, zeroLongitude));
+
+                // Если найдено более близкое расстояние, обновляем переменные
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearestIndex = i;
+                }
+            }
+            Console.WriteLine(nearestIndex);
         }
     }
 }

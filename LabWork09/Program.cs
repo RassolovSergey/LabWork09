@@ -8,23 +8,8 @@ using System.Xml.Linq;
 
 namespace LabWork09
 {
-    internal class Program
+    public class Program
     {
-        // 1) Функция Проверка ввода числа (Double)
-        static double InputDoubleNumber(string msg)
-        {
-            Console.Write(msg);
-            bool isConvert;
-            double number;
-            do
-            {
-                isConvert = double.TryParse(Console.ReadLine(), out number);
-                Console.ForegroundColor = ConsoleColor.Red;
-                if (!isConvert) Console.WriteLine("Ошибка: Введите число!");
-                Console.ForegroundColor = ConsoleColor.White;
-            } while (!isConvert);
-            return number;
-        }
         // 2) Функция Проверка ввода числа (Int)
         static uint InputUintNumber(string msg)
         {
@@ -52,8 +37,9 @@ namespace LabWork09
             Console.WriteLine("6. Унарные операции с объектом");
             Console.WriteLine("7. Операции приведения типа");
             Console.WriteLine("8. Бинарные операции");
-            Console.WriteLine("9. Количество созданных локаций (лбъектов класса)");
-            Console.WriteLine("10. Выйти \n");
+            Console.WriteLine("9. Количество созданных локаций (объектов класса)");
+            Console.WriteLine("10. Найти ближайшую географическую точку к «Острову Ноль»");
+            Console.WriteLine("11. Выйти \n");
             uint numberMenu = InputUintNumber("Ваш выбор: \t");
             return numberMenu;
         }
@@ -118,34 +104,6 @@ namespace LabWork09
         }
         static void Main(string[] args)
         {
-            /* Тестирование 1-2
-            {
-                // Создание Локаций
-                uint count = 0;
-                GeoCoordinates[] objects = new GeoCoordinates[count];
-
-                //CreatLoc(ref count, ref objects); // Создание Локаций вручную
-                CreatLocRnd(ref count, ref objects); // Создание Локаций с помощью ДСЧ
-                Print(count, objects);// Вывод  всех данных
-
-
-                // Поиск растояния между объектами
-                Console.WriteLine("Выберите две локации");
-                uint loc1 = InputUintNumber($"Номер Первой локации:\t");
-                uint loc2 = InputUintNumber($"Номер Второй локации:\t");
-                GeoCoordinates CoordinatesLoc1 = objects[loc1 - 1];
-                GeoCoordinates CoordinatesLoc2 = objects[loc2 - 1];
-                double distanceSt = GeoCoordinates.DistanceSt(CoordinatesLoc1, CoordinatesLoc2);
-                double distance = CoordinatesLoc1.Distance(CoordinatesLoc2);
-                Console.WriteLine("Расстояние между точками: " + distanceSt + " км \t (Cтатическая функция)");
-                Console.WriteLine("Расстояние между точками: " + distance + " км \t (Метод класса)");
-
-                // Кол-во созданных в программе объектов
-                Console.WriteLine($"Количество созданых объектов: {GeoCoordinates.GetObjectCount()}");
-
-                // Задание 2 Проверка на различность меридиан
-                Console.WriteLine("Проверка на различность меридиан");
-            }*/
             GeoCoordinates locationMain = new GeoCoordinates(); // Создаём объект класса GeoCoordinates
             GeoCoordinatesArray locationArrMain = new GeoCoordinatesArray(); // Создаем массив из объектов класса
             Random rnd = new Random(); // Объект Random, созданный вне конструктора
@@ -211,8 +169,8 @@ namespace LabWork09
                                     locationArrMain.PrintLocations();
                                     break;
                                 case 3:
-                                    uint countKey = InputUintNumber("Кол-во объектов: \t");
-                                    locationArrMain = new GeoCoordinatesArray(countKey);
+                                    uint countKey1 = InputUintNumber("Кол-во объектов: \t");
+                                    locationArrMain = new GeoCoordinatesArray(countKey1);
                                     Console.WriteLine("Выши объекты: ");
                                     locationArrMain.PrintLocations();
                                     break;
@@ -356,9 +314,16 @@ namespace LabWork09
                         }
                         break;
                     case 9:
-
+                        Console.WriteLine($"Кол-во объектов класса GeoCoordinates: \t {GeoCoordinates.objectCount}");
                         break;
                     case 10:
+                        uint countKey = InputUintNumber("Кол-во объектов: \t");
+                        locationArrMain = new GeoCoordinatesArray(countKey);
+                        Console.WriteLine("Выши объекты: ");
+                        locationArrMain.PrintLocations();
+                        locationArrMain.FindNearestToZeroIslandIndex();
+                        break;
+                    case 11:
                         flag = true;
                         break;
                     default:

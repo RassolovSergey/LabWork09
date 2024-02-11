@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace LabWork09
 {
-    internal class GeoCoordinates : ICloneable
+    public class GeoCoordinates : ICloneable
     {
-        private static int objectCount = 0;
+        public static int objectCount = 0;
         //GeoCoordinates
         private double latitude; // Широта
         private double longitude; // Долгота
@@ -53,7 +53,7 @@ namespace LabWork09
         public object Clone() { return MemberwiseClone(); }
 
         // Функция ввода широты
-        public double Latitude 
+        public double Latitude
         {
             set
             {
@@ -70,7 +70,7 @@ namespace LabWork09
         }
 
         // Функция ввода Долготы
-        public double Longitude 
+        public double Longitude
         {
             set
             {
@@ -224,7 +224,7 @@ namespace LabWork09
             return loc.Latitude == 0;
         }
 
-        
+
         // Операции приведения типа string (неявная)
         public static implicit operator string(GeoCoordinates loc)
         {
@@ -232,18 +232,19 @@ namespace LabWork09
             if (loc.Longitude < 0) { return "Западная долгота"; }
             else return "Нулевой меридиан";
         }
-        
+
         // Проверяем, находятся ли обе точки на одной параллели (имеют одинаковую широту)
         public static bool operator ==(GeoCoordinates loc1, GeoCoordinates loc2)
         {
             return loc1.Latitude == loc2.Latitude;
         }
-        
+
         // Проверка на различность меридиан
         public static bool operator !=(GeoCoordinates loc1, GeoCoordinates loc2)
         {
             return (loc1.Longitude > 0 && loc2.Longitude < 0) || (loc1.Longitude < 0 && loc2.Longitude > 0);
         }
+        // Счетчик кол-во объектов
 
         public override bool Equals(object obj)
         {
